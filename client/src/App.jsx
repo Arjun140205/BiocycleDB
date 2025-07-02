@@ -12,6 +12,10 @@ import NavBar from "./components/NavBar";
 import Visualizer from "./pages/Visualizer";
 import SubmitResearch from "./pages/SubmitResearch";
 import Archive from "./pages/Archive";
+import ReactionVisualizer from "./pages/ReactionVisualizer";
+import CinematicReaction from './pages/CinematicVisualizer';
+import ReactionAnimation from './pages/ReactionAnimation';
+
 
 function App() {
   return (
@@ -29,9 +33,13 @@ function App() {
             <Route path="/graph" element={<GraphView />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/timeline" element={<TimelineView />} />
-            <Route path="/visualizer" element={<Visualizer />} />
+            <Route path="/visualizer" element={<ReactionVisualizer />} />
+            <Route path="/visualizer/synthesis" element={<Visualizer />} />
             <Route path="/submit" element={<SubmitResearch />} />
             <Route path="/archive" element={<Archive />} />
+            <Route path="/visualizer/reaction1" element={<ReactionVisualizer />} />
+            <Route path="/visualizer/cinematic" element={<CinematicReaction />} />
+            <Route path="/visualizer/animated" element={<ReactionAnimation />} />
           </Routes>
         </main>
       </Router>
