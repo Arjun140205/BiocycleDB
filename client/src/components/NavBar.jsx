@@ -8,6 +8,7 @@ const NavBar = () => {
     { path: "/compounds", label: "Compounds", icon: "🧪" },
     { path: "/papers", label: "Papers", icon: "📄" },
     { path: "/timeline", label: "Timeline", icon: "📅" },
+    { path: "/visualizer", label: "Visualizer", icon: "🔬" },
     { path: "/graph", label: "Graph", icon: "📊" },
     { path: "/admin", label: "Admin Upload", icon: "⬆️" },
     { path: "/admin-dashboard", label: "Analytics", icon: "📈" },
