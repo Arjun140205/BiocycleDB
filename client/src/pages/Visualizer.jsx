@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import * as $3Dmol from "3dmol";
+import { Link } from "react-router-dom";
 
 const Visualizer = () => {
   const [routes, setRoutes] = useState([]);
@@ -46,6 +47,25 @@ const Visualizer = () => {
 
   return (
     <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Navigation Header */}
+      <div className="col-span-full mb-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-blue-900">Synthesis Route Visualizer</h1>
+          <div className="flex gap-2">
+            <Link 
+              to="/visualizer" 
+              className="bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-300 transition-colors"
+            >
+              Switch to Reaction Mode
+            </Link>
+            <span className="bg-blue-600 text-white px-3 py-1 rounded text-sm">
+              Synthesis Mode
+            </span>
+          </div>
+        </div>
+        <p className="text-gray-600 mt-2">Browse and visualize synthesis routes from the database</p>
+      </div>
+
       {/* Route Selector */}
       {routes.length > 1 && (
         <div className="col-span-full mb-4">
