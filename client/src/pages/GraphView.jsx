@@ -8,22 +8,32 @@ const GraphView = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const compounds = await axios.get("http://localhost:5001/api/compounds");
-        const papers = await axios.get("http://localhost:5001/api/papers");
+        const compoundsRes = await axios.get("http://localhost:5001/api/compounds");
+        const papersRes = await axios.get("http://localhost:5001/api/papers");
+
+        // Handle both paginated and non-paginated responses
+        const compoundsData = compoundsRes.data.compounds || compoundsRes.data;
+        const papersData = papersRes.data.papers || papersRes.data;
 
         const nodes = [];
         const links = [];
 
-        compounds.data.forEach((comp) => {
-          nodes.push({ id: comp._id, label: comp.name, type: "compound" });
-          comp.relatedPapers.forEach((paperId) => {
-            links.push({ source: comp._id, target: paperId });
+        if (Array.isArray(compoundsData)) {
+          compoundsData.forEach((comp) => {
+            nodes.push({ id: comp._id, label: comp.name, type: "compound" });
+            if (comp.relatedPapers && Array.isArray(comp.relatedPapers)) {
+              comp.relatedPapers.forEach((paperId) => {
+                links.push({ source: comp._id, target: paperId });
+              });
+            }
           });
-        });
+        }
 
-        papers.data.forEach((paper) => {
-          nodes.push({ id: paper._id, label: paper.title, type: "paper" });
-        });
+        if (Array.isArray(papersData)) {
+          papersData.forEach((paper) => {
+            nodes.push({ id: paper._id, label: paper.title, type: "paper" });
+          });
+        }
 
         drawGraph(nodes, links);
       } catch (err) {
