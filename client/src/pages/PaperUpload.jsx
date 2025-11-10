@@ -73,7 +73,7 @@ const PaperUpload = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5001/api/paper-upload/save', {
+      await axios.post('http://localhost:5001/api/paper-upload/save', {
         paperData: editablePaper,
         compounds: editableCompounds,
         synthesisRoutes: editableSynthesis,
