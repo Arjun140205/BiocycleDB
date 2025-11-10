@@ -11,7 +11,9 @@ const PaperArchive = () => {
   useEffect(() => {
     axios.get("http://localhost:5001/api/papers")
       .then(res => {
-        setPapers(res.data);
+        // Handle both paginated and non-paginated responses
+        const papersData = res.data.papers || res.data;
+        setPapers(Array.isArray(papersData) ? papersData : []);
         setLoading(false);
       })
       .catch(err => {
