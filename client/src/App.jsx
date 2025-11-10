@@ -15,35 +15,40 @@ import Archive from "./pages/Archive";
 import ReactionVisualizer from "./pages/ReactionVisualizer";
 import CinematicReaction from './pages/CinematicVisualizer';
 import ReactionAnimation from './pages/ReactionAnimation';
+import PaperUpload from './pages/PaperUpload';
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <Router>
-        <NavBar />
-        <main className="min-h-screen pt-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/compounds" element={<CompoundExplorer />} />
-            <Route path="/papers" element={<PaperArchive />} />
-            <Route path="/synthesis/:id" element={<SynthesisViewer />} />
-            <Route path="/admin" element={<AdminPanel />} />
-            <Route path="/compound/:id" element={<CompoundDetails />} />
-            <Route path="/graph" element={<GraphView />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/timeline" element={<TimelineView />} />
-            <Route path="/visualizer" element={<ReactionVisualizer />} />
-            <Route path="/visualizer/synthesis" element={<Visualizer />} />
-            <Route path="/submit" element={<SubmitResearch />} />
-            <Route path="/archive" element={<Archive />} />
-            <Route path="/visualizer/reaction1" element={<ReactionVisualizer />} />
-            <Route path="/visualizer/cinematic" element={<CinematicReaction />} />
-            <Route path="/visualizer/animated" element={<ReactionAnimation />} />
-          </Routes>
-        </main>
-      </Router>
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <Router>
+          <NavBar />
+          <main className="min-h-screen pt-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/compounds" element={<CompoundExplorer />} />
+              <Route path="/papers" element={<PaperArchive />} />
+              <Route path="/synthesis/:id" element={<SynthesisViewer />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/compound/:id" element={<CompoundDetails />} />
+              <Route path="/graph" element={<GraphView />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/timeline" element={<TimelineView />} />
+              <Route path="/visualizer" element={<ReactionVisualizer />} />
+              <Route path="/visualizer/synthesis" element={<Visualizer />} />
+              <Route path="/submit" element={<SubmitResearch />} />
+              <Route path="/archive" element={<Archive />} />
+              <Route path="/visualizer/reaction1" element={<ReactionVisualizer />} />
+              <Route path="/visualizer/cinematic" element={<CinematicReaction />} />
+              <Route path="/visualizer/animated" element={<ReactionAnimation />} />
+              <Route path="/paper-upload" element={<PaperUpload />} />
+            </Routes>
+          </main>
+        </Router>
+      </div>
+    </ErrorBoundary>
   );
 }
 
