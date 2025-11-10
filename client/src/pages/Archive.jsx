@@ -19,9 +19,14 @@ const Archive = () => {
           axios.get("http://localhost:5001/api/synthesis")
         ]);
         
-        setCompounds(compoundsRes.data);
-        setPapers(papersRes.data);
-        setSynthesis(synthesisRes.data);
+        // Handle both paginated and non-paginated responses
+        const compoundsData = compoundsRes.data.compounds || compoundsRes.data;
+        const papersData = papersRes.data.papers || papersRes.data;
+        const synthesisData = synthesisRes.data.synthesis || synthesisRes.data;
+        
+        setCompounds(Array.isArray(compoundsData) ? compoundsData : []);
+        setPapers(Array.isArray(papersData) ? papersData : []);
+        setSynthesis(Array.isArray(synthesisData) ? synthesisData : []);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching archive data:", err);
