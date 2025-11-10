@@ -12,10 +12,16 @@ const Visualizer = () => {
   useEffect(() => {
     axios.get("http://localhost:5001/api/synthesis")
       .then(res => {
-        setRoutes(res.data);
-        if (res.data.length > 0) {
-          setCurrentRoute(res.data[0]);
+        // Handle both paginated and non-paginated responses
+        const synthesisData = res.data.synthesis || res.data;
+        const routesData = Array.isArray(synthesisData) ? synthesisData : [];
+        setRoutes(routesData);
+        if (routesData.length > 0) {
+          setCurrentRoute(routesData[0]);
         }
+      })
+      .catch(err => {
+        console.error("Error fetching synthesis routes:", err);
       });
   }, []);
 
