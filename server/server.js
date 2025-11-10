@@ -6,6 +6,8 @@ const path = require('path');
 const aiRoutes = require('./routes/aiRoutes');
 const authRoutes = require('./routes/authRoutes');
 const contributionRoutes = require('./routes/contributionRoutes');
+const paperUploadRoutes = require('./routes/paperUploadRoutes');
+const researchRoutes = require('./routes/researchRoutes');
 
 dotenv.config();
 
@@ -17,6 +19,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Create uploads directory if it doesn't exist
+const fs = require('fs');
+const uploadsDir = path.join(__dirname, 'uploads/papers');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Static file serving (for PDFs if needed)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -32,12 +40,20 @@ app.use('/api/compounds', compoundRoutes);
 app.use('/api/papers', paperRoutes);
 app.use('/api/synthesis', synthesisRoutes);
 app.use('/api/contributions', contributionRoutes);
+app.use('/api/paper-upload', paperUploadRoutes);
+app.use('/api/research', researchRoutes);
 
 // MongoDB connection
+const { createIndexes } = require('./utils/dbIndexes');
+
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log('MongoDB connected');
+    
+    // Create database indexes for better performance
+    await createIndexes();
+    
     app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   })
   .catch((err) => console.error('MongoDB connection failed:', err));
