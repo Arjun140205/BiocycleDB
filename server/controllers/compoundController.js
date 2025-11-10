@@ -11,8 +11,26 @@ exports.createCompound = async (req, res) => {
 
 exports.getAllCompounds = async (req, res) => {
   try {
-    const compounds = await Compound.find().populate('relatedPapers synthesisRoute');
-    res.status(200).json(compounds);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+
+    const total = await Compound.countDocuments();
+    const compounds = await Compound.find()
+      .populate('relatedPapers synthesisRoute')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      compounds,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        itemsPerPage: limit
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch compounds', details: err });
   }
