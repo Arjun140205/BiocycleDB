@@ -13,14 +13,17 @@ const TimelineView = () => {
         setLoading(true);
         const response = await axios.get("http://localhost:5001/api/papers");
         
-        if (response.data.length === 0) {
+        // Handle both paginated and non-paginated responses
+        const papersData = response.data.papers || response.data;
+        
+        if (!Array.isArray(papersData) || papersData.length === 0) {
           setError("No papers found in the database.");
           setLoading(false);
           return;
         }
 
         const papersByYear = {};
-        response.data.forEach(paper => {
+        papersData.forEach(paper => {
           const year = paper.year || "Unknown";
           if (!papersByYear[year]) papersByYear[year] = [];
           papersByYear[year].push(paper);
