@@ -10,8 +10,8 @@ const NavBar = () => {
     { path: "/timeline", label: "Timeline", icon: "📅" },
     { path: "/visualizer", label: "Visualizer", icon: "🔬" },
     { path: "/graph", label: "Graph", icon: "📊" },
-    { path: "/admin", label: "Admin Upload", icon: "⬆️" },
-    { path: "/admin-dashboard", label: "Analytics", icon: "📈" },
+    { path: "/paper-upload", label: "AI Upload", icon: "🤖" },
+    { path: "/admin", label: "Admin", icon: "⬆️" },
   ];
 
   return (
