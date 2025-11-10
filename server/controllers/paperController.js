@@ -11,8 +11,26 @@ exports.createPaper = async (req, res) => {
 
 exports.getAllPapers = async (req, res) => {
   try {
-    const papers = await Paper.find().populate('relatedCompounds');
-    res.status(200).json(papers);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const total = await Paper.countDocuments();
+    const papers = await Paper.find()
+      .populate('relatedCompounds')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      papers,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        itemsPerPage: limit
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch papers', details: err });
   }
